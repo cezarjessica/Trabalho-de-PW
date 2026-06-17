@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #000, #300, #900);
+      color: white;
+    }
+
+    .card {
+      background: #111;
+      padding: 30px;
+      border-radius: 15px;
+      width: 380px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, .5);
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+      color: #ff2b2b;
+      margin-bottom: 15px;
+    }
+
+    input,
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+    }
+
+    input {
+      border: 1px solid #ff2b2b;
+      background: #222;
+      color: white;
+    }
+
+    button {
+      background: #c00000;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff0000;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #c00000;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #c00000;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Cadastro</h1>
+    <form onsubmit="cadastro(event)">
+      <input id="Nome" placeholder="Nome" required>
+      <input id="CPF" placeholder="CPF" required>
+      <input type="password" id="Senha" placeholder="Senha" required>
+      <input type="password" id="confir" placeholder="Confirmar Senha" required>
+      <button>Cadastrar</button>
+    </form>
+  </div>
+  <script>
+    async function cadastro(e) {
+      e.preventDefault();
+      const nome = Nome.value, cpf = CPF.value, senha = Senha.value, conf = confir.value;
+      if (senha !== conf) return alert("Senhas diferentes");
+      let r = await fetch("http://localhost:3000/usuarios", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ nome, cpf, senha }) });
+      let usuario = await r.json();
+      localStorage.setItem("id", usuario.id);
+      localStorage.setItem("nome", usuario.nome);
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+
+</html>
